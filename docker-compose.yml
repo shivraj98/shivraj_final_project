@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  demo:
+    driver: bridge
+
+services:
+  angular-app:
+    image: front-img 
+    container_name: front-demo-cont
+    build:
+      context: ./frontend/demo 
+      dockerfile: Dockerfile 
+    ports:
+      - "81:80"  
+    depends_on:
+    - spring-boot-app  
+    networks:
+      - demo
+
+  spring-boot-app:
+    image: demo-img  
+    container_name: backed-demo-cont
+    build:
+      context: ./Backend/demo
+      dockerfile: Dockerfile 
+    ports:
+      - "8081:8080" 
+    networks:
+      - demo
